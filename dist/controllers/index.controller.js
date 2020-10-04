@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = void 0;
+exports.getUserbyId = exports.getUsers = void 0;
 // Importar la conexion a la base de datos
 const database_1 = require("../database");
+// Devolver todos los usuarios de la base de datos
 exports.getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield database_1.pool.query('SELECT * FROM users');
@@ -25,3 +26,25 @@ exports.getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(500).json('Internal Server Error');
     }
 });
+// Buscar un usuario por su id
+exports.getUserbyId = (req, res) => {
+    console.log(req.params.id); //  Parametro recibido
+    res.send("Id recibido");
+};
+/*
+// Crear un usuario
+export const createUser = (req : Request , res : Response) : Promise<Response> => {
+
+}
+
+
+// Actualizar un usuario
+export const updateUser = (req : Request , res : Response) : Promise<Response> => {
+
+}
+
+
+// Actualizar un usuario
+export const deleteUser = (req : Request , res : Response) : Promise<Response> => {
+
+} */ 

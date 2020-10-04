@@ -6,7 +6,7 @@ const index_controller_1 = require("../controllers/index.controller");
 //router.get('/test', (req, res)=> res.send("Hola Mundo"));
 // RUTAS DE LA RESTAPI
 router.get('/users', index_controller_1.getUsers);
-//router.get('/users/:id', getUsers);
+router.get('/users/:id', index_controller_1.getUserbyId);
 //router.post('/users', getUsers);
 //router.put('/users/:id', getUsers);
 //router.delete('/users/:id', getUsers);

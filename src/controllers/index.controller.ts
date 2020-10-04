@@ -4,6 +4,8 @@ import { QueryResult} from 'pg';
 // Importar la conexion a la base de datos
 import { pool } from '../database';
 
+// Devolver todos los usuarios de la base de datos
+
 export const getUsers = async ( req: Request , res : Response): Promise<Response> => {
 
     try {
@@ -19,3 +21,27 @@ export const getUsers = async ( req: Request , res : Response): Promise<Response
     }    
 
 };
+
+// Buscar un usuario por su id
+export const getUserbyId = (req : Request , res : Response) : Promise<Response> => {
+    console.log(req.params.id); //  Parametro recibido
+    res.send("Id recibido");     
+}
+
+/* 
+// Crear un usuario
+export const createUser = (req : Request , res : Response) : Promise<Response> => {
+
+}
+
+
+// Actualizar un usuario
+export const updateUser = (req : Request , res : Response) : Promise<Response> => {
+
+}
+
+
+// Actualizar un usuario
+export const deleteUser = (req : Request , res : Response) : Promise<Response> => {
+
+} */
