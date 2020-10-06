@@ -23,18 +23,39 @@ export const getUsers = async ( req: Request , res : Response): Promise<Response
 };
 
 // Buscar un usuario por su id
-export const getUserbyId = (req : Request , res : Response) : Promise<Response> => {
-    console.log(req.params.id); //  Parametro recibido
-    res.send("Id recibido");     
+export const getUserbyId = async (req : Request , res : Response) : Promise<Response> => {
+    //console.log(req.params.id); //  Parametro recibido
+    //res.send("Id recibido");  
+    const id = parseInt(req.params.id);
+    const response :QueryResult = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    return res.json(response.rows);
+
+}
+
+
+// Crear un usuario
+export const createUser = async (req : Request , res : Response) : Promise<Response> => {
+
+    //console.log(req.body);
+    //res.send('Recibido');
+    const { name , email } = req.body;
+    //console.log (name , email);
+    //res.send('Recibido');
+
+    const response: QueryResult = await pool.query('INSERT INTO users (name, email) VALUES ($1,$2)', [name , email]);
+    return res.json({
+        "mesage" : "User created ok",
+        body : {
+            user : {
+                name,
+                email
+            }
+        }
+    });
+
 }
 
 /* 
-// Crear un usuario
-export const createUser = (req : Request , res : Response) : Promise<Response> => {
-
-}
-
-
 // Actualizar un usuario
 export const updateUser = (req : Request , res : Response) : Promise<Response> => {
 

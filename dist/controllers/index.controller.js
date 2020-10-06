@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserbyId = exports.getUsers = void 0;
+exports.createUser = exports.getUserbyId = exports.getUsers = void 0;
 // Importar la conexion a la base de datos
 const database_1 = require("../database");
 // Devolver todos los usuarios de la base de datos
@@ -27,17 +27,32 @@ exports.getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 // Buscar un usuario por su id
-exports.getUserbyId = (req, res) => {
-    console.log(req.params.id); //  Parametro recibido
-    res.send("Id recibido");
-};
-/*
+exports.getUserbyId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //console.log(req.params.id); //  Parametro recibido
+    //res.send("Id recibido");  
+    const id = parseInt(req.params.id);
+    const response = yield database_1.pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    return res.json(response.rows);
+});
 // Crear un usuario
-export const createUser = (req : Request , res : Response) : Promise<Response> => {
-
-}
-
-
+exports.createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //console.log(req.body);
+    //res.send('Recibido');
+    const { name, email } = req.body;
+    //console.log (name , email);
+    //res.send('Recibido');
+    const response = yield database_1.pool.query('INSERT INTO users (name, email) VALUES ($1,$2)', [name, email]);
+    return res.json({
+        "mesage": "User created ok",
+        body: {
+            user: {
+                name,
+                email
+            }
+        }
+    });
+});
+/*
 // Actualizar un usuario
 export const updateUser = (req : Request , res : Response) : Promise<Response> => {
 
