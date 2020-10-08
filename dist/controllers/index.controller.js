@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.getUserbyId = exports.getUsers = void 0;
+exports.deleteUser = exports.updateUser = exports.createUser = exports.getUserbyId = exports.getUsers = void 0;
 // Importar la conexion a la base de datos
 const database_1 = require("../database");
 // Devolver todos los usuarios de la base de datos
@@ -52,14 +52,26 @@ exports.createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     });
 });
-/*
 // Actualizar un usuario
-export const updateUser = (req : Request , res : Response) : Promise<Response> => {
-
-}
-
-
+exports.updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    const { name, email } = req.body;
+    try {
+        yield database_1.pool.query('UPDATE users SET name=$1,email=$2 WHERE id=$3', [name, email, id]);
+        return res.json("User Updated");
+    }
+    catch (e) {
+        return res.json("Server Internal Error");
+    }
+});
 // Actualizar un usuario
-export const deleteUser = (req : Request , res : Response) : Promise<Response> => {
-
-} */ 
+exports.deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    try {
+        yield database_1.pool.query('DELETE FROM users WHERE ID=$1', [id]);
+        return res.json("Usuario Eliminado");
+    }
+    catch (e) {
+        return res.json("Server Internal Error");
+    }
+});

@@ -55,14 +55,34 @@ export const createUser = async (req : Request , res : Response) : Promise<Respo
 
 }
 
-/* 
+
 // Actualizar un usuario
-export const updateUser = (req : Request , res : Response) : Promise<Response> => {
+export const updateUser = async (req : Request , res : Response) : Promise<Response> => {
+
+    const id = parseInt(req.params.id);
+    const { name , email } = req.body;
+
+    try {
+        await pool.query('UPDATE users SET name=$1,email=$2 WHERE id=$3',[name, email, id]);
+        return res.json("User Updated");
+    } catch (e) {
+        return res.json("Server Internal Error");
+    }
+
 
 }
 
 
 // Actualizar un usuario
-export const deleteUser = (req : Request , res : Response) : Promise<Response> => {
+export const deleteUser = async (req : Request , res : Response) : Promise<Response> => {
 
-} */
+    const id = parseInt(req.params.id);
+    try {
+        await pool.query('DELETE FROM users WHERE ID=$1', [id]);
+        return res.json("Usuario Eliminado");    
+    } catch (e){
+        return res.json("Server Internal Error");   
+    }
+   
+    
+} 
